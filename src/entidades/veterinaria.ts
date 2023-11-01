@@ -2,12 +2,18 @@ import { Cliente } from './cliente';
 import { Paciente } from './paciente';
 import { Proveedor } from './proveedor';
 
+
 export class Veterinaria {
     private clientesAsociados: Cliente[] = [];
     private pacientesAsociados: Paciente[] = [];
     private proveedoresAsociados: Proveedor[] = [];
+    private static lastId: number = 0;
 
-    constructor(public id: number, public nombre: string, public dirección: string) { }
+    constructor(public id: number | null, public nombre: string, public dirección: string) {
+        if (!id) {
+            this.id = ++Veterinaria.lastId;
+        }
+    }
 
     modificarNombre(nuevoNombre: string) {
         this.nombre = nuevoNombre;
@@ -29,5 +35,4 @@ export class Veterinaria {
     asociarProveedor(proveedor: Proveedor) {
         this.proveedoresAsociados.push(proveedor);
     }
-
 }
